@@ -1,0 +1,11 @@
+@import '_variables';
+@import "~nprogress/nprogress.css";
+
+#nprogress .bar {
+    background: $default;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: $default;
+    border-left-color: $default;
+}

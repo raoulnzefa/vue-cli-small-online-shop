@@ -4,7 +4,7 @@ import Home from './views/Home.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -22,4 +22,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     }
   ]
+});
+router.beforeEach((to, from, next) => {
+  Vue.prototype.$nprogress.start();
+  next();
+});
+router.afterEach(() => {
+  Vue.prototype.$nprogress.done();
 })
+export default router;

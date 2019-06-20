@@ -1,16 +1,31 @@
 <template>
   <div id="app">
+    {{cart}}
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">{{$t('hello')}}</router-link>|
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
   </div>
 </template>
-
+<script>
+import { mapGetters } from "vuex";
+export default {
+  mounted() {
+    // this.$store.dispatch("getCartProducts");
+    // this.$store.dispatch("addProductToCart", {
+    //   id: 2,
+    //   quantity: 10
+    // });
+  },
+  computed: {
+    ...mapGetters(["cart"])
+  }
+};
+</script>
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
