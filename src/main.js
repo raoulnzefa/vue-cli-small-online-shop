@@ -5,8 +5,8 @@ import store from './store/store'
 import VueI18n from 'vue-i18n'
 import messages from './lang/'
 import './registerServiceWorker';
-import './assets/scss/main.scss'
 import Nprogress from 'nprogress';
+import Loading from 'Components/Loading/loading.vue';
 Vue.prototype.$nprogress = Nprogress;
 
 import 'bootstrap';
@@ -20,6 +20,7 @@ const i18n = new VueI18n({
   locale: 'en',
   messages, // set locale messages
 });
+Vue.component('loading', Loading);
 new Vue({
   router,
   store,

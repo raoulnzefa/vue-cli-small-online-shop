@@ -1,3 +1,5 @@
 export default {
-    hello: 'test'
+    mainPage: {
+        addToCart: 'ADD TO CART',
+    }
 }

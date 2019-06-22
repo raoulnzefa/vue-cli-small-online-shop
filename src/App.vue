@@ -1,10 +1,5 @@
 <template>
   <div id="app">
-    {{cart}}
-    <div id="nav">
-      <router-link to="/">{{$t('hello')}}</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>

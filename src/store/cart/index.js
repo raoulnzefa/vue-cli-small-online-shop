@@ -10,6 +10,12 @@ const getters = {
     cart: state => {
 
         return state.cart;
+    },
+    cartCount: state => {
+        let count = state.cart.length ? state.cart.reduce((item1, item2) => {
+            return { quantity: item1.quantity + item2.quantity }
+        })['quantity'] : 0;
+        return count > 9 ? '+9' : count;
     }
 }
 const actions = {

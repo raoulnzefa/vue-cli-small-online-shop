@@ -1,5 +1,17 @@
 @import '_variables';
 @import "~nprogress/nprogress.css";
+@import "~bootstrap/scss/bootstrap";
+@import "~animate.css/source/_base.css";
+@import "~animate.css/source/fading_entrances/fadeIn.css";
+@import "~animate.css/source/fading_exits/fadeOut.css";
+@import "Lato";
+
+
+html,
+body {
+    min-height: 100%;
+    font-family: Lato !important;
+}
 
 #nprogress .bar {
     background: $default;
@@ -8,4 +20,136 @@
 #nprogress .spinner-icon {
     border-top-color: $default;
     border-left-color: $default;
+}
+
+.content {
+    margin-top: 65px;
+}
+
+.client-header {
+    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 999;
+    background: rgba(255, 255, 255, 0.95);
+
+    .logo-img {
+        @media screen and(max-width:500px) {
+            max-width: 120px;
+        }
+    }
+}
+
+.py-15 {
+    padding-top: .15rem;
+    padding-bottom: .15rem;
+}
+
+.mh-80 {
+    min-height: 80vh;
+}
+
+.cart {
+
+    cursor: pointer;
+
+    .cart-icon {
+        width: 30px;
+    }
+
+    .badge-cart {
+        right: -5px;
+        top: -5px;
+        border-radius: 100%;
+    }
+
+    .cart-tooltip {
+        position: absolute;
+        top: 105%;
+        right: -1rem;
+        width: 250px;
+        max-width: 83vw;
+        height: 500px;
+        border-radius: 10px;
+        background: red;
+        z-index: 1000;
+    }
+
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.badge-cart {
+
+    color: #fff;
+    background-color: #ff0099;
+
+}
+
+.products-row {
+    margin: 2.5rem auto;
+}
+
+.loading {
+
+
+
+
+    height: 100%;
+    width: 100%;
+
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.75);
+
+    .loading-img {
+        width: 50%;
+        max-height: 100%;
+    }
+}
+
+.product-card {
+    margin-bottom: 1rem;
+
+    .card-img-top {
+        height: 150px;
+    }
+
+    .card-title {
+        font-size: 15px;
+        letter-spacing: 1px;
+        color: #555555;
+        font-family: "Lato";
+        font-weight: 700;
+    }
+
+    .card-footer {
+        padding: 0.75rem 0rem;
+        margin: 0 1.25rem;
+    }
+
+    .btn-product {
+        font-size: 10px;
+        letter-spacing: 1px;
+        font-family: Lato;
+        font-weight: 700;
+        line-height: 19px;
+    }
+
+    .price-span {
+        font-size: 14px;
+        letter-spacing: 1px;
+        line-height: 29px;
+        color: #333333;
+        font-family: "Lato";
+        font-weight: 700;
+    }
+
 }

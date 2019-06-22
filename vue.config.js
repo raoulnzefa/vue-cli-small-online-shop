@@ -2,7 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-
+    css: {
+        loaderOptions: {
+            sass: {
+                data: `
+             
+              @import "@/assets/scss/main.scss";
+            `
+            }
+        }
+    },
     configureWebpack: {
         resolve: {
             alias: {
