@@ -115,11 +115,40 @@ body {
     }
 }
 
-.product-card {
+.product-wrapper {
     margin-bottom: 1rem;
+}
+
+.product-card {
+    // margin-bottom: 1rem;
+    height: 100%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 
     .card-img-top {
         height: 150px;
+    }
+
+    .card-img-side {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1.5rem auto;
+
+        @media screen and (max-width:768px) {
+            margin: auto;
+        }
+
+        // max-height: 300px;
+    }
+
+    .card-description {
+        flex: 1;
+        color: #999999;
+        font-family: "Playfair Display";
+        font-weight: 400;
+        text-align: left;
+        font-size: 14px;
+        letter-spacing: 0px;
     }
 
     .card-title {

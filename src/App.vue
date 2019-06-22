@@ -8,10 +8,7 @@ import { mapGetters } from "vuex";
 export default {
   mounted() {
     // this.$store.dispatch("getCartProducts");
-    // this.$store.dispatch("addProductToCart", {
-    //   id: 2,
-    //   quantity: 10
-    // });
+    
   },
   computed: {
     ...mapGetters(["cart"])

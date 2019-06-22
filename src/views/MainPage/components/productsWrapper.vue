@@ -6,7 +6,9 @@
       v-for="product in products"
       :product="product"
       :key="'product-main-page-'+product.id"
+      @openProduct="ShowProductModal"
     ></product-card>
+    <product-modal :product="ProductToShowInModal" ref="productModal"></product-modal>
   </div>
 </template>
 
@@ -14,18 +16,29 @@
 <script>
 import { mapGetters } from "vuex";
 import ProductCard from "Components/Product/Card.vue";
+import ProductModal from "Components/Product/ProductModal.vue";
 export default {
   data() {
-    return {};
+    return {
+      ProductToShowInModal: {}
+    };
   },
   computed: {
     ...mapGetters(["products"])
   },
   props: {},
   watch: {},
-  methods: {},
+  methods: {
+    ShowProductModal(e) {
+      this.ProductToShowInModal = e;
+      this.$nextTick(() => {
+        this.$refs.productModal.openModal();
+      });
+    }
+  },
   components: {
-    "product-card": ProductCard
+    "product-card": ProductCard,
+    "product-modal": ProductModal
   },
   created() {},
   mounted() {}

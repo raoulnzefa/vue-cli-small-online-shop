@@ -1,14 +1,54 @@
 <template>
-  <div class="col-12 col-md-6 col-lg-6" v-if="product.featuredProduct">
+  <div
+    @click="openProduct"
+    class="col-12 col-md-6 col-lg-6 product-wrapper"
+    v-if="product.featuredProduct"
+  >
     <div class="card product-card featured">
-      <div class="card-body">This is some text within a card body.</div>
+      <div class="card-body py-0">
+        <div class="row" style="height:100%;">
+          <div class="col-12 col-md-6 col-lg-6 px-0 d-flex d-align-items-center">
+            <img class="card-img-side" :src="product.featuredPhoto" alt>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6 d-flex flex-column pt-3">
+            <h5 class="card-title text-left">{{product.name}}</h5>
+            <p class="card-text">
+              <star-rating
+                :active-color="'#fbc300'"
+                :border-color="'#fbc300'"
+                :inactive-color="'#ffffff'"
+                :border-width="1"
+                :increment=".1"
+                :star-size="19"
+                :read-only="true"
+                :rating="Number(product.rate)"
+              ></star-rating>
+            </p>
+            <p class="card-text card-description">{{product.description}}</p>
+            <div class="card-footer bg-transparent d-flex m-0 justify-content-between">
+              <div class="price-span">${{productPrice}}</div>
+              <a
+                href="#"
+                @click.stop.prevent="addProductToCart"
+                class="btn btn-primary btn-sm btn-product"
+              >
+                {{$t('mainPage.addToCart')}}
+                <span
+                  class="badge badge-light"
+                  v-if="productInCart"
+                >{{countInCard}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-12 col-sm-6 col-md-3 col-lg-3" v-else>
+  <div @click="openProduct" class="col-12 col-sm-6 col-md-3 col-lg-3 product-wrapper" v-else>
     <div class="card product-card">
       <img class="card-img-top" :src="product.featuredPhoto" :alt="product.name">
       <div class="card-body">
-        <h5 class="card-title">{{product.name}}</h5>
+        <h5 class="card-title text-left">{{product.name}}</h5>
         <p class="card-text">
           <star-rating
             :active-color="'#fbc300'"
@@ -24,7 +64,17 @@
       </div>
       <div class="card-footer bg-transparent d-flex justify-content-between">
         <div class="price-span">${{productPrice}}</div>
-        <a href="#" class="btn btn-primary btn-sm btn-product">{{$t('mainPage.addToCart')}}</a>
+        <a
+          href="#"
+          @click.stop.prevent="addProductToCart"
+          class="btn btn-primary btn-sm btn-product"
+        >
+          {{$t('mainPage.addToCart')}}
+          <span
+            class="badge badge-light"
+            v-if="productInCart"
+          >{{countInCard}}</span>
+        </a>
       </div>
     </div>
   </div>
@@ -45,6 +95,14 @@ export default {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       }
       return "";
+    },
+    productInCart() {
+      return this.$store.getters.isProductInCart(this.product.id);
+    },
+    countInCard() {
+      return this.productInCart
+        ? this.$store.getters.productCountInCard(this.product.id)
+        : 0;
     }
   },
   props: {
@@ -54,7 +112,17 @@ export default {
     }
   },
   watch: {},
-  methods: {},
+  methods: {
+    openProduct() {
+      this.$emit("openProduct", this.product);
+    },
+    addProductToCart() {
+      this.$store.dispatch("addProductToCart", {
+        id: this.product.id,
+        quantity: this.countInCard + 1
+      });
+    }
+  },
   components: {
     StarRating
   },

@@ -16,6 +16,19 @@ const getters = {
             return { quantity: item1.quantity + item2.quantity }
         })['quantity'] : 0;
         return count > 9 ? '+9' : count;
+    },
+    isProductInCart: (state) => (id) => {
+        return Boolean(
+            state.cart.filter(product => {
+                return product.id === id;
+            }).length
+        );
+    },
+    productCountInCard: (state, getters) => (id) => {
+        if (!getters.isProductInCart(id)) {
+            return false;
+        }
+        return state.cart.find(product => product.id === id).quantity;
     }
 }
 const actions = {
