@@ -34,7 +34,7 @@
               >
                 {{$t('mainPage.addToCart')}}
                 <span
-                  class="badge badge-light"
+                  class="badge badge-light text-center"
                   v-if="productInCart"
                 >{{countInCard}}</span>
               </a>
@@ -71,7 +71,7 @@
         >
           {{$t('mainPage.addToCart')}}
           <span
-            class="badge badge-light"
+            class="badge badge-light text-center"
             v-if="productInCart"
           >{{countInCard}}</span>
         </a>
@@ -92,7 +92,7 @@ export default {
     productPrice() {
       if (this.product && this.product.price) {
         var price = this.product.price.toString();
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        return this.$store.getters.getFormatedPrice(price);
       }
       return "";
     },
@@ -119,7 +119,8 @@ export default {
     addProductToCart() {
       this.$store.dispatch("addProductToCart", {
         id: this.product.id,
-        quantity: this.countInCard + 1
+        quantity: this.countInCard + 1,
+        product: this.product
       });
     }
   },

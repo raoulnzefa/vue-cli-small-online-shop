@@ -3,7 +3,8 @@ const state = {
     currentPage: 1,
     products: [],
     productsCache: {},
-    loadingProducts: true
+    loadingProducts: true,
+    total: 0
 
 }
 const getters = {
@@ -15,6 +16,18 @@ const getters = {
     },
     loadingProducts: state => {
         return state.loadingProducts;
+    },
+    getFormatedPrice: () => (price) => {
+        if (!price) {
+            return 0;
+        }
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
+    pagesCount: state => {
+        return parseInt(state.total / 7);
+    },
+    getTotalCount: state => {
+        return state.total;
     }
 
 }
@@ -29,16 +42,17 @@ const actions = {
             });
             context.commit('setLoading', false);
         } else {
-            
+
             Vue.axios.get(`/products?_page=${payload.page}&_limit=7`).then(response => {
 
 
                 context.commit('setLoading', false);
 
-                console.log(response);
+
                 context.commit('updateProducts', {
                     products: response.data,
-                    page: payload.page
+                    page: payload.page,
+                    total: response.headers['x-total-count']
                 })
 
             });
@@ -63,6 +77,10 @@ const mutations = {
     updateProducts(state, payload) {
         state.products = payload.products;
         state.productsCache[payload.page] = payload.products;
+        state.currentPage = payload.page;
+        if (payload.total) {
+            state.total = payload.total;
+        }
     }
 }
 export default {

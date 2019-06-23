@@ -6,12 +6,12 @@
         <router-link class="navbar-brand" :to="{name:'mainPage'}">
           <img class="logo-img" src="/img/logo.png">
         </router-link>
-        <div class="d-flex dropdown">
+        <div class="d-flex dropdown align-items-center">
           <a class="btn btn-outline-primary my-2 my-sm-0 py-15" href="#">Login</a>
-          <div class="relative cart ml-1" @click="openDropDown">
+          <div class="relative cart ml-1">
             <span class="absolute badge badge-cart">{{cartCount}}</span>
 
-            <img src="/img/cart.svg" class="cart-icon" alt="cart">
+            <img src="/img/cart.svg" @click="openDropDown" class="cart-icon" alt="cart">
             <transition
               name="custom-classes-transition"
               enter-active-class="animated fadeIn"
@@ -43,12 +43,7 @@ export default {
   watch: {},
   methods: {
     openDropDown() {
-      if (this.cartCount === 0) {
-        this.showDropDown = !this.showDropDown;
-        return false;
-      } else {
-        this.showDropDown = !this.showDropDown;
-      }
+      this.showDropDown = !this.showDropDown;
     }
   },
   components: {

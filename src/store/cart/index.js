@@ -3,7 +3,8 @@ let cart = window.localStorage.getItem('cart');
 
 const state = {
     cart: cart ? JSON.parse(cart) : [],
-    cartProducts: []
+    cartProducts: [],
+    loadingCartProducts: true
 
 }
 const getters = {
@@ -26,16 +27,41 @@ const getters = {
     },
     productCountInCard: (state, getters) => (id) => {
         if (!getters.isProductInCart(id)) {
-            return false;
+            return 0;
         }
         return state.cart.find(product => product.id === id).quantity;
+    },
+
+    cartProducts: (state, getters) => {
+        return state.cartProducts.map((product) => {
+            product.quantity = getters.productCountInCard(product.id);
+            product.totalPrice = Number(product.price) * product.quantity;
+            return product;
+        });
+    },
+    productTotalPriceInCard: (state, getters) => (id) => {
+        if (!getters.isProductInCart(id)) {
+            return 0;
+        }
+        return getters.cartProducts.find(product => product.id === id).totalPrice;
+    },
+    totalPrice: (state, getters) => {
+        var totalPrice = (getters.cartProducts && getters.cartProducts.length) ? getters.cartProducts.reduce((product1, product2) => {
+            return { totalPrice: product1.totalPrice + product2.totalPrice }
+        }) : { totalPrice: 0 };
+        return totalPrice.totalPrice;
+    },
+    loadingCartProducts: state => {
+        return state.loadingCartProducts;
     }
+
 }
 const actions = {
     addProductToCart(context, payload) {
         context.commit('onAddProductToCart', payload);
     },
     getCartProducts(context) {
+        context.state.loadingCartProducts = true;
         let ProductsIp = context.state.cart.map(product => product.id);
         let ProductsIpQuery = ProductsIp.join('&id=');
         Vue.axios.get('/products?id=' + ProductsIpQuery).then(response => {
@@ -55,11 +81,13 @@ const mutations = {
             ProductFound.quantity = payload.quantity;
         } else {
             state.cart.push(payload);
+            state.cartProducts.push(payload.product);
         }
         this.commit('saveCart');
     },
     updateCartProducts(state, products) {
         state.cartProducts = products;
+        state.loadingCartProducts = false;
     }
 
 }
