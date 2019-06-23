@@ -7,7 +7,24 @@
           <img class="logo-img" src="/img/logo.png">
         </router-link>
         <div class="d-flex dropdown align-items-center">
-          <a class="btn btn-outline-primary my-2 my-sm-0 py-15" href="#">Login</a>
+          <router-link
+            :to="'/admin'"
+            class="btn btn-outline-primary my-2 my-sm-0 mr-2 py-15"
+            v-if="$store.getters.isAdmin"
+          >Admin Panel</router-link>
+          <a
+            v-if="!isAuth"
+            class="btn btn-outline-primary my-2 my-sm-0 py-15"
+            @click.prevent="openLoginModal"
+            href="#"
+          >{{$t('Login.login')}}</a>
+          <a
+            v-if="isAuth"
+            class="btn btn-outline-primary my-2 my-sm-0 py-15"
+            @click.prevent="$store.commit('logOut')"
+            href="#"
+          >{{$t('Login.logout')}}</a>
+
           <div class="relative cart ml-1">
             <span class="absolute badge badge-cart">{{cartCount}}</span>
 
@@ -30,6 +47,8 @@
 <script>
 import { mapGetters } from "vuex";
 import CartDropDown from "./CartDropDown";
+import $ from "jquery";
+
 export default {
   data() {
     return {
@@ -37,13 +56,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cartCount"])
+    ...mapGetters(["cartCount", "isAuth"])
   },
   props: {},
   watch: {},
   methods: {
     openDropDown() {
       this.showDropDown = !this.showDropDown;
+    },
+    openLoginModal() {
+      $("#loginModal").modal("show");
     }
   },
   components: {

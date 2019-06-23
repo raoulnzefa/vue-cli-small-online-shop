@@ -4,12 +4,15 @@
     <main class="content">
       <router-view></router-view>
     </main>
+    <login-modal></login-modal>
   </div>
 </template>
 
 
 <script>
 import Header from "Components/Header/Header.vue";
+import loginModal from "Components/Header/loginModal";
+
 export default {
   data() {
     return {};
@@ -19,7 +22,8 @@ export default {
   watch: {},
   methods: {},
   components: {
-    "app-header": Header
+    "app-header": Header,
+    "login-modal": loginModal
   },
   created() {},
   mounted() {}

@@ -1,4 +1,15 @@
 {
+    "users": [
+        {
+            "userName": "test@test.com",
+            "password": "12345678"
+        },
+        {
+            "userName": "admin@admin.com",
+            "password": "12345678",
+            "isAdmin": true
+        }
+    ],
     "products": [
         {
             "name": "Comba Leather And Suede Trainers",
